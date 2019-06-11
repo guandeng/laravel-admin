@@ -438,7 +438,6 @@ class HasMany extends Field
          */
         $script = <<<EOT
 var index = 0;
-(function ($){
 $('#has-many-{$this->column}').off('click', '.add').on('click', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
@@ -448,12 +447,13 @@ $('#has-many-{$this->column}').off('click', '.add').on('click', '.add', function
     var template = tpl.html().replace(/{$defaultKey}/g, index);
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
+    return false;
 });
 
 $('#has-many-{$this->column}').off('click', '.remove').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-});
+    return false;
 });
 
 EOT;
@@ -546,11 +546,13 @@ $('#has-many-{$this->column}').on('click', '.add', function () {
     var template = tpl.html().replace(/{$defaultKey}/g, index);
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
+    return false;
 });
 
 $('#has-many-{$this->column}').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
+    return false;
 });
 
 EOT;
